@@ -6,6 +6,7 @@
 package smartclass;
 
 import smartclass.ui.ClassRoomUI;
+import smartclass.ui.ClassUI;
 
 /**
  *
@@ -27,6 +28,8 @@ public class SmartClass {
 
         ClassRoomUI classRoomUI = ClassRoomUI.getInstance();
         classRoomUI.setVisible(true);
+        ClassUI classUI = new ClassUI();
+        classUI.setVisible(true);
     }
 
 }

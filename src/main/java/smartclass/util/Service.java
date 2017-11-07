@@ -34,7 +34,7 @@ public class Service {
                     }
                     break;
                 case "brightness":
-                    if (Integer.parseInt(a.getValue()) < 50) {
+                    if (Float.parseFloat(a.getValue()) < 50.0) {
                         c.lightOn();
                     } else {
                         c.lightOff();

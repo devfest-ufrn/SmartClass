@@ -203,7 +203,8 @@ public class ClassRoomUI extends javax.swing.JFrame {
                             + "}";
                     String resposta2 = ng.sendPost("/v1/subscribeContext", bodySubs);
                     SubscribeResponseContainer sr = mapper.readValue(resposta2, SubscribeResponseContainer.class);
-
+                    System.out.println(getIpAddress());
+                        System.out.println(resposta2);
                 } catch (IOException ex) {
                     Logger.getLogger(ClassRoomUI.class.getName()).log(Level.SEVERE, null, ex);
                 }

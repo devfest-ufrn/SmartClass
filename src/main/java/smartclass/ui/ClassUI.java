@@ -5,6 +5,18 @@
  */
 package smartclass.ui;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
+import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
+import smartclass.SmartClass;
+import smartclass.entities.ContextResponses;
+import smartclass.entities.ContextResponsesContainer;
+import smartclass.util.NgsiRequest;
+
 /**
  *
  * @author Pedro
@@ -13,6 +25,7 @@ public class ClassUI extends javax.swing.JFrame {
 
     /**
      * Creates new form ClassUI
+     *
      * @param roomWidget
      */
     public ClassUI() {
@@ -26,6 +39,19 @@ public class ClassUI extends javax.swing.JFrame {
         jSlider2.setLabelTable(jSlider2.createStandardLabels(1));
         jSlider2.setValue(23);
         jSlider2StateChanged(null);
+
+        jComboBox1.removeAllItems();
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            @Override
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+        ContextResponsesContainer crc = getSalas();
+        jComboBox1.addItem("");
+        for (ContextResponses contextResponse : crc.getContextResponses()) {
+            jComboBox1.addItem(contextResponse.getContextElement().getId());
+        }
     }
 
     /**
@@ -52,6 +78,8 @@ public class ClassUI extends javax.swing.JFrame {
         jRadioButton5 = new javax.swing.JRadioButton();
         jLabel3 = new javax.swing.JLabel();
         jRadioButton6 = new javax.swing.JRadioButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,6 +163,13 @@ public class ClassUI extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBox1ItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -145,10 +180,12 @@ public class ClassUI extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(533, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel4)
-                        .addContainerGap(484, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
             .addComponent(jSlider2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,13 +206,15 @@ public class ClassUI extends javax.swing.JFrame {
                                 .addComponent(jRadioButton3)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jRadioButton4)))))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 149, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jRadioButton1)
@@ -199,6 +238,13 @@ public class ClassUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jButton1.setText("jButton1");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -207,45 +253,51 @@ public class ClassUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(256, 256, 256)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jRadioButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton5MouseClicked
-        if(jRadioButton5.isSelected()){
+        if (jRadioButton5.isSelected()) {
         }
     }//GEN-LAST:event_jRadioButton5MouseClicked
 
     private void jRadioButton6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton6MouseClicked
-        if(jRadioButton6.isSelected()){
+        if (jRadioButton6.isSelected()) {
         }
     }//GEN-LAST:event_jRadioButton6MouseClicked
 
     private void jRadioButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton1MouseClicked
-        if(jRadioButton1.isSelected()){
+        if (jRadioButton1.isSelected()) {
         }
     }//GEN-LAST:event_jRadioButton1MouseClicked
 
     private void jRadioButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton2MouseClicked
-        if(jRadioButton2.isSelected()){
+        if (jRadioButton2.isSelected()) {
         }
     }//GEN-LAST:event_jRadioButton2MouseClicked
 
     private void jRadioButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton4MouseClicked
-        if(jRadioButton4.isSelected()){
+        if (jRadioButton4.isSelected()) {
         }
     }//GEN-LAST:event_jRadioButton4MouseClicked
 
     private void jRadioButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jRadioButton3MouseClicked
-        if(jRadioButton3.isSelected()){
+        if (jRadioButton3.isSelected()) {
         }
     }//GEN-LAST:event_jRadioButton3MouseClicked
 
@@ -256,6 +308,24 @@ public class ClassUI extends javax.swing.JFrame {
     private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
 
     }//GEN-LAST:event_jSlider2StateChanged
+
+    private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ItemStateChanged
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        if ("".equals(jComboBox1.getSelectedItem().toString()) || jComboBox1.getSelectedItem().toString() == null) {
+                System.out.println("Nada selecionado.");
+                return;
+        }
+        int time = timeToInt(getSelectedButtonTime(buttonGroup1));
+        float brightness = (short)jSlider1.getValue();
+        int temperature = jSlider2.getValue();
+        int presence = presenceStringToInt(getSelectedButtonTime(buttonGroup2));
+        String sala = jComboBox1.getSelectedItem().toString();
+        System.out.println(brightness+"  "+temperature+"  "+presence+"  "+sala);
+        sendUpdatedRoom(sala, presence, brightness, temperature, time);
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -288,6 +358,8 @@ public class ClassUI extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -302,4 +374,107 @@ public class ClassUI extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JSlider jSlider2;
     // End of variables declaration//GEN-END:variables
+
+    public void sendUpdatedRoom(String sala, int presence, float brightness, int temperature, int time) {
+        NgsiRequest ng = new NgsiRequest();
+        String bodyQuery = "{\n"
+                + "  \"contextElements\":[\n"
+                + "    {\n"
+                + "      \"type\": \"Sala\",\n"
+                + "      \"isPattern\": \"false\",\n"
+                + "      \"id\": \""+sala+"\",\n"
+                + "      \"attributes\":[\n"
+                + "        {\n"
+                + "          \"name\": \"presence\",\n"
+                + "          \"type\": \"integer\",\n"
+                + "          \"value\": \""+presence+"\"\n"
+                + "        },\n"
+                + "        {\n"
+                + "          \"name\": \"brightness\",\n"
+                + "          \"type\": \"float\",\n"
+                + "          \"value\": \""+brightness+"\"\n"
+                + "        },\n"
+                + "        {\n"
+                + "          \"name\": \"temperature\",\n"
+                + "          \"type\": \"float\",\n"
+                + "          \"value\": \""+temperature+"\"\n"
+                + "        },\n"
+                + "        {\n"
+                + "          \"name\": \"time\",\n"
+                + "          \"type\": \"int\",\n"
+                + "          \"value\": \""+time+"\"\n"
+                + "        }\n"
+                + "      ]\n"
+                + "    }\n"
+                + "  ],\n"
+                + "  \"updateAction\": \"UPDATE\"\n"
+                + "}";
+
+        String resposta = ng.sendPost("/v1/updateContext", bodyQuery);
+    }
+
+    private ContextResponsesContainer getSalas() {
+        NgsiRequest ng = new NgsiRequest();
+        String bodyQuery = "{\n"
+                + "	\"entities\":[\n"
+                + "		{\n"
+                + "			\"type\": \"Sala\",\n"
+                + "			\"isPattern\": \"true\",\n"
+                + "			\"id\": \"SalaInteligente.*\"\n"
+                + "		}\n"
+                + "	]\n"
+                + "}";
+        String resposta = ng.sendPost("/v1/queryContext", bodyQuery);
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.readValue(resposta, ContextResponsesContainer.class);
+        } catch (IOException ex) {
+            Logger.getLogger(SmartClass.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    private int timeToInt(String time) {
+        if (null != time) {
+            switch (time) {
+                case "13:00 - 14:00":
+                    return 0;
+                case "14:00 - 15:00":
+                    return 1;
+                case "15:00 - 16:00":
+                    return 2;
+                case "16:00 - 17:00":
+                    return 3;
+                default:
+                    return -1;
+            }
+        }
+        return -1;
+    }
+    
+    private int presenceStringToInt(String presence) {
+        if (null != presence) {
+            switch (presence) {
+                case "Professor na sala":
+                    return 1;
+                case "Professor fora da sala":
+                    return 0;
+                default:
+                    return -1;
+            }
+        }
+        return -1;
+    }
+    
+    public String getSelectedButtonTime(ButtonGroup buttonGroup) {
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                return button.getText();
+            }
+        }
+
+        return null;
+    }
 }
