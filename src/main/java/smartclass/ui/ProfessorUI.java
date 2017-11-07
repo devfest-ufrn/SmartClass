@@ -14,10 +14,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JFileChooser;
 import smartclass.Professor;
 
-/**
- *
- * @author Pedro
- */
 public class ProfessorUI extends javax.swing.JFrame {
     
     private File p1File = null;

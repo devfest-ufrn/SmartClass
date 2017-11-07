@@ -5,11 +5,9 @@
  */
 package smartclass.ui;
 
-/**
- *
- * @author Pedro
- */
 public class ClassUI extends javax.swing.JFrame {
+
+    private static ClassUI instance;
 
     /**
      * Creates new form ClassUI
@@ -26,6 +24,13 @@ public class ClassUI extends javax.swing.JFrame {
         jSlider2.setLabelTable(jSlider2.createStandardLabels(1));
         jSlider2.setValue(23);
         jSlider2StateChanged(null);
+    }
+
+    public static synchronized ClassUI getInstance() {
+        if (instance == null) {
+            instance = new ClassUI();
+        }
+        return instance;
     }
 
     /**
