@@ -5,6 +5,8 @@
  */
 package smartclass;
 
+import smartclass.ui.ClassRoomUI;
+
 /**
  *
  * @author Pedro
@@ -12,18 +14,19 @@ package smartclass;
 public class SmartClass {
 
     /*
-    * Sala de aula inteligente, monitorando, no minimo, 3 elementos: projetor,
-    * arcondicionado, computador. Colocar a exibicao dos slides de aula quando um
-    * determinado professor entrar na sala. Deve considerar, no minimo, 4 professores e
-    * as preferencias de cada professor quanto a temperatura do ar. Colocar os slides
-    * especificos do professor que entrar na sala.
-    */
-    
+ * Sala de aula inteligente, monitorando, no minimo, 3 elementos: projetor,
+ * arcondicionado, computador. Colocar a exibicao dos slides de aula quando um
+ * determinado professor entrar na sala. Deve considerar, no minimo, 4 professores e
+ * as preferencias de cada professor quanto a temperatura do ar. Colocar os slides
+ * especificos do professor que entrar na sala.
+     */
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
+        ClassRoomUI classRoomUI = ClassRoomUI.getInstance();
+        classRoomUI.setVisible(true);
     }
 
 }
