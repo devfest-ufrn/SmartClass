@@ -23,6 +23,8 @@ import smartclass.util.NgsiRequest;
  */
 public class ClassUI extends javax.swing.JFrame {
 
+    private static ClassUI instance;
+
     /**
      * Creates new form ClassUI
      *
@@ -52,6 +54,13 @@ public class ClassUI extends javax.swing.JFrame {
         for (ContextResponses contextResponse : crc.getContextResponses()) {
             jComboBox1.addItem(contextResponse.getContextElement().getId());
         }
+    }
+
+    public static synchronized ClassUI getInstance() {
+        if (instance == null) {
+            instance = new ClassUI();
+        }
+        return instance;
     }
 
     /**

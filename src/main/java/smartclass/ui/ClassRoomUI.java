@@ -21,10 +21,6 @@ import smartclass.entities.SubscribeResponseContainer;
 import smartclass.util.NgsiRequest;
 import smartclass.util.NioSocketServer;
 
-/**
- *
- * @author Pedro
- */
 public class ClassRoomUI extends javax.swing.JFrame {
 
     private static ClassRoomUI classRoomUI = new ClassRoomUI();

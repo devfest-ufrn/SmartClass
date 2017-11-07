@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<widget xmlns="http://wirecloud.conwet.fi.upm.es/ns/macdescription/1" vendor="Pedro" name="sala-de-aula" version="1.0.0">
+
+    <details>
+        <title>Sala Inteligente Widget</title>
+        <homepage>https://github.com/Wirecloud/flotr2-graph</homepage>
+        <authors>Pedro Victor</authors>
+        <contributors>Brunno Moreira</contributors>
+        <email>pedrovictor_caldas@hotmail.com</email>
+        <image>images/catalogue.png</image>
+        <description>Widget da sala.</description>
+        <longdescription>DESCRIPTION.md</longdescription>
+        <changelog>CHANGELOG.md</changelog>
+        <doc>doc/index.md</doc>
+        <license>Apache License 2.0</license>
+        <licenseurl>http://www.apache.org/licenses/LICENSE-2.0.html</licenseurl>
+    </details>
+
+    <preferences>
+        <preference name="id_sala" type="text" label="ID da sala" description="Sala para receber informações" default="SalaInteligente1"/>
+    </preferences>
+
+    <wiring>
+        <inputendpoint name="input" type="text" label="Data in" description="Entrada de dados da sala." friendcode="floatr2-graph-data"/>
+    </wiring>
+
+    <contents src="index.html" contenttype="text/html" charset="utf-8" useplatformstyle="true"/>
+    <rendering width="8" height="32"/>
+</widget>
